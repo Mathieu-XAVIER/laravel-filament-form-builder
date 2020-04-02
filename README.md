@@ -6,6 +6,8 @@ Drag and drop interface to manage fields.
 
 This package uses [laravel-form](http://gitlab.novius.net/lara_libs/laravel-form) and it simply provides a visual interface based on Laravel Nova.
 
+![Demo image](http://gitlab.novius.net/lara_libs/laravel-nova-form-builder/wikis/uploads/380784f509d3576d36f20ce41c174303/form-builder-demo.gif)
+
 ## Requirements
 
 * PHP >= 7.2
