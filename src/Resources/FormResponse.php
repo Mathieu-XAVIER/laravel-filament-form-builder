@@ -55,13 +55,13 @@ class FormResponse extends Resource
         return [
             ID::make()->sortable(),
 
-            Text::make('Réponses', function () {
+            Text::make(trans('laravel-form-builder::response.response'), function () {
                 return $this->displayResponsesAsHtmlSummary($this->resource);
             })
                 ->asHtml()
                 ->onlyOnIndex(),
 
-            Text::make('Réponses', function () {
+            Text::make(trans('laravel-form-builder::response.response'), function () {
                 return $this->displayResponsesAsHtmlTable($this->resource);
             })
                 ->asHtml()

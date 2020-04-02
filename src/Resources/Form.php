@@ -60,11 +60,11 @@ class Form extends Resource
         return [
             ID::make()->sortable(),
 
-            TextWithSlug::make('Nom du formulaire', 'name')
+            TextWithSlug::make(trans('laravel-form-builder::form.form_name'), 'name')
                 ->slug()
                 ->rules('required'),
 
-            Slug::make('Slug', 'slug')
+            Slug::make(trans('laravel-form-builder::form.slug'), 'slug')
                 ->rules('required', 'max:191', function ($attribute, $value, $fail) {
                     if (!preg_match('/^[a-z][-a-z0-9]*$/', $value)) {
                         return $fail('The '.$attribute.' field must be a valid slug.');
@@ -74,8 +74,8 @@ class Form extends Resource
                 ->updateRules('unique:forms,slug,{{resourceId}}')
                 ->disableAutoUpdateWhenUpdating(),
 
-            Text::make('Gérer les champs', function () {
-                return sprintf('<a class="no-underline dim text-primary font-bold" href="%s">%s</a>', '/admin/laravel-form-builder/'.$this->id, 'Modifier les champs du formulaires');
+            Text::make(trans('laravel-form-builder::form.update_fields'), function () {
+                return sprintf('<a class="no-underline dim text-primary font-bold" href="%s">%s</a>', '/admin/laravel-form-builder/'.$this->id, trans('laravel-form-builder::form.update_fields'));
             })
                 ->asHtml()
                 ->exceptOnForms(),
@@ -124,7 +124,7 @@ class Form extends Resource
 
             ])->dependsOnNotEmpty('after_sent_notification'),
 
-            Text::make('Classe(s) HTML', 'form_element_custom_classes')
+            Text::make(trans('laravel-form-builder::form.html_classes'), 'form_element_custom_classes')
                 ->hideFromIndex(),
 
             HasMany::make(trans('laravel-form-builder::response.responses'), 'responses', FormResponse::class),
