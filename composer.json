@@ -1,0 +1,47 @@
+{
+  "name": "novius/laravel-nova-form-builder",
+  "description": "Form builder for Laravel Nova.",
+  "keywords": [
+    "laravel",
+    "nova",
+    "form",
+    "form-builder"
+  ],
+  "license": "AGPL-3.0-or-later",
+  "require": {
+    "php": "^7.2",
+    "benjaminhirsch/nova-slug-field": "^1.2.4",
+    "novius/laravel-form": "dev-master"
+  },
+  "require-dev": {
+    "friendsofphp/php-cs-fixer": "^2.16"
+  },
+  "autoload": {
+    "psr-4": {
+      "Novius\\LaravelFormBuilder\\": "src/"
+    }
+  },
+  "extra": {
+    "laravel": {
+      "providers": [
+        "Novius\\LaravelFormBuilder\\LaravelFormBuilderServiceProvider"
+      ]
+    }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@gitlab.novius.net:lara_libs/laravel-form.git"
+    }
+  ],
+  "scripts": {
+    "lint": [
+      "php-cs-fixer fix --config .php_cs -vv --diff --allow-risky=yes --dry-run"
+    ]
+  },
+  "config": {
+    "sort-packages": true
+  },
+  "minimum-stability": "dev",
+  "prefer-stable": true
+}

@@ -1,0 +1,177 @@
+<?php
+
+namespace Novius\LaravelFormBuilder\Resources;
+
+use App\Nova\Resource;
+use Benjaminhirsch\NovaSlugField\Slug;
+use Benjaminhirsch\NovaSlugField\TextWithSlug;
+use Epartment\NovaDependencyContainer\HasDependencies;
+use Epartment\NovaDependencyContainer\NovaDependencyContainer;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
+use Laravel\Nova\Fields\HasMany;
+use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Fields\Select;
+use Laravel\Nova\Fields\Trix;
+use Laravel\Nova\Fields\Boolean;
+use Laravel\Nova\Fields\Textarea;
+
+class Form extends Resource
+{
+    use HasDependencies;
+
+    /**
+     * The model the resource corresponds to.
+     *
+     * @var string
+     */
+    public static $model = \Novius\LaravelForm\Models\Form::class;
+
+    /**
+     * The single value that should be used to represent the resource when being displayed.
+     *
+     * @var string
+     */
+    public static $title = 'name';
+
+    /**
+     * The columns that should be searched.
+     *
+     * @var array
+     */
+    public static $search = [
+        'name',
+    ];
+
+    public static function label()
+    {
+        return trans('laravel-form-builder::form.forms');
+    }
+
+    /**
+     * Get the fields displayed by the resource.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return array
+     */
+    public function fields(Request $request)
+    {
+        return [
+            ID::make()->sortable(),
+
+            TextWithSlug::make('Nom du formulaire', 'name')
+                ->slug()
+                ->rules('required'),
+
+            Slug::make('Slug', 'slug')
+                ->rules('required', 'max:191', function ($attribute, $value, $fail) {
+                    if (!preg_match('/^[a-z][-a-z0-9]*$/', $value)) {
+                        return $fail('The '.$attribute.' field must be a valid slug.');
+                    }
+                })
+                ->creationRules('unique:forms,slug')
+                ->updateRules('unique:forms,slug,{{resourceId}}')
+                ->disableAutoUpdateWhenUpdating(),
+
+            Text::make('Gérer les champs', function () {
+                return sprintf('<a class="no-underline dim text-primary font-bold" href="%s">%s</a>', '/admin/laravel-form-builder/'.$this->id, 'Modifier les champs du formulaires');
+            })
+                ->asHtml()
+                ->exceptOnForms(),
+
+            Select::make(trans('laravel-form-builder::form.after_sent_action'), 'after_sent_action')
+                ->options(\Novius\LaravelForm\Models\Form::afterSentActions())
+                ->displayUsingLabels()
+                ->rules('required', 'in:'.implode(',', \Novius\LaravelForm\Models\Form::afterSentActionsIds()))
+                ->hideFromIndex(),
+
+            NovaDependencyContainer::make([
+                Trix::make(trans('laravel-form-builder::form.success_message_sent'), 'after_sent_message')
+                    ->hideFromIndex(),
+            ])->dependsOn('after_sent_action', \Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE),
+
+            NovaDependencyContainer::make([
+                Text::make(trans('laravel-form-builder::form.redirection_url_field'), 'after_sent_redirection_url')
+                    ->rules('required_if:after_sent_action,'.\Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_REDIRECTION, 'url')
+                    ->hideFromIndex(),
+            ])->dependsOn('after_sent_action', \Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_REDIRECTION),
+
+            Boolean::make(trans('laravel-form-builder::form.enable_mail_notification_field'), 'after_sent_notification'),
+
+            NovaDependencyContainer::make([
+                Textarea::make(trans('laravel-form-builder::form.notification_recipients_field'), 'after_sent_notification_recipients')
+                    ->help(trans('laravel-form-builder::form.mail_notification_recipients_help'))
+                    ->rows(3)
+                    ->rules('required_if:after_sent_notification,'.\Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE, function ($attribute, $value, $fail) {
+                        if (!empty($value)) {
+                            $emails = explode(',', $value);
+                            foreach ($emails as $email) {
+                                $validator = Validator::make(['email' => $email], [
+                                    'email' => 'required|email',
+                                ]);
+
+                                if (!$validator->passes()) {
+                                    return $fail(trans('laravel-form-builder::form.notification_recipients_format_error'));
+                                }
+                            }
+                        }
+                    }),
+
+                Text::make(trans('laravel-form-builder::form.notification_subject'), 'after_sent_notification_subject')
+                    ->rules('required_if:after_sent_notification,'.\Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE)
+                    ->hideFromIndex(),
+
+            ])->dependsOnNotEmpty('after_sent_notification'),
+
+            Text::make('Classe(s) HTML', 'form_element_custom_classes')
+                ->hideFromIndex(),
+
+            HasMany::make(trans('laravel-form-builder::response.responses'), 'responses', FormResponse::class),
+        ];
+    }
+
+    /**
+     * Get the cards available for the request.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return array
+     */
+    public function cards(Request $request)
+    {
+        return [];
+    }
+
+    /**
+     * Get the filters available for the resource.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return array
+     */
+    public function filters(Request $request)
+    {
+        return [];
+    }
+
+    /**
+     * Get the lenses available for the resource.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return array
+     */
+    public function lenses(Request $request)
+    {
+        return [];
+    }
+
+    /**
+     * Get the actions available for the resource.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return array
+     */
+    public function actions(Request $request)
+    {
+        return [];
+    }
+}
