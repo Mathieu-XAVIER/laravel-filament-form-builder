@@ -11,6 +11,7 @@
   "require": {
     "php": "^7.2",
     "benjaminhirsch/nova-slug-field": "^1.2.4",
+    "epartment/nova-dependency-container": "^1.2",
     "novius/laravel-form": "dev-master"
   },
   "require-dev": {
