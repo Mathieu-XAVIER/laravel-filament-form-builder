@@ -1,6 +1,7 @@
 <template>
     <div class="flex justify-center">
-        <button class="btn btn-default btn-primary inline-flex items-center relative">
+        <button type="button"
+                class="btn btn-default btn-primary inline-flex items-center relative">
             {{ currentField.buttonText }}
         </button>
     </div>
