@@ -15,7 +15,7 @@
                                      controls-position="right">
                     </el-input-number>
                 </div>
-                <div class="w-full px-3"
+                <div class="w-full px-3 mb-3"
                      v-if="activeField.fieldType === 'LongTextInput'">
                     <label class="block text-80 text-sm mb-2">
                         {{ __('number_of_rows') }}
