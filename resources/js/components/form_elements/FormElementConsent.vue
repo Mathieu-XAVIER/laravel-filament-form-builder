@@ -1,5 +1,5 @@
 <template>
-    <div class="flex mb-6">
+    <div class="flex">
         <label class="flex items-start content-start justify-start">
             <input :required="currentField.isRequired"
                    type="checkbox"
