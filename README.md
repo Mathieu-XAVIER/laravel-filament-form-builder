@@ -19,6 +19,32 @@ This package uses [laravel-form](http://gitlab.novius.net/lara_libs/laravel-form
 composer require novius/laravel-nova-form-builder
 ```
 
+Add `LaravelFormBuilder` tool to `NovaServiceProvider`: 
+
+```php
+namespace App\Providers;
+
+use Illuminate\Support\Facades\Gate;
+use Laravel\Nova\Cards\Help;
+use Laravel\Nova\Nova;
+use Laravel\Nova\NovaApplicationServiceProvider;
+use Novius\LaravelFormBuilder\LaravelFormBuilder;
+
+class NovaServiceProvider extends NovaApplicationServiceProvider
+{
+    // ...
+    
+    public function tools()
+    {
+        return [
+            new LaravelFormBuilder(),
+        ];
+    }
+}
+
+```
+
+
 Next, publish public files : 
 
 ```sh
