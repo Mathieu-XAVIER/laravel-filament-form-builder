@@ -44,7 +44,7 @@ class FormController extends Controller
         ]);
     }
 
-    protected function initialInterfaceFields():array
+    protected function initialInterfaceFields(): array
     {
         return [
             [
