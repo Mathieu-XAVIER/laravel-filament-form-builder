@@ -116,11 +116,13 @@ class Form extends Resource
                                 }
                             }
                         }
-                    }),
+                    })
+                    ->required(),
 
                 Text::make(trans('laravel-form-builder::form.notification_subject'), 'after_sent_notification_subject')
                     ->rules('required_if:after_sent_notification,'.\Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE)
-                    ->hideFromIndex(),
+                    ->hideFromIndex()
+                    ->required(),
 
             ])->dependsOnNotEmpty('after_sent_notification'),
 
