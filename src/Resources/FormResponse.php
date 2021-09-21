@@ -72,7 +72,7 @@ class FormResponse extends Resource
         ];
     }
 
-    protected function displayResponsesAsHtmlSummary(\Novius\LaravelForm\Models\FormResponse $formResponse):string
+    protected function displayResponsesAsHtmlSummary(\Novius\LaravelForm\Models\FormResponse $formResponse): string
     {
         $responses = $formResponse->responsesWithReadableFormat('summary');
         $fieldsLimit = (int) config('laravel-form-builder.index_responses_summary_limit_fields', 5);
@@ -83,6 +83,7 @@ class FormResponse extends Resource
             $responseFields[] = sprintf('<div class="py-1"><strong>%s :&nbsp;</strong><span>%s</span></div>', $response['label'], $response['value']);
             if ($totalResponses > $fieldsLimit && count($responseFields) >= $fieldsLimit) {
                 $responseFields[] = '...';
+
                 break;
             }
         }
@@ -90,7 +91,7 @@ class FormResponse extends Resource
         return sprintf('<div class="py-2">%s</div>', implode('', $responseFields));
     }
 
-    protected function displayResponsesAsHtmlTable(\Novius\LaravelForm\Models\FormResponse $formResponse):string
+    protected function displayResponsesAsHtmlTable(\Novius\LaravelForm\Models\FormResponse $formResponse): string
     {
         $responses = $formResponse->responsesWithReadableFormat();
         $responseFields = [];
