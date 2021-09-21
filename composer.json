@@ -12,7 +12,7 @@
     "php": "^7.4|^8.0",
     "benjaminhirsch/nova-slug-field": "^1.2.6",
     "epartment/nova-dependency-container": "^1.3.2",
-    "novius/laravel-form": "dev-dev"
+    "novius/laravel-form": "~0.1.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^v2.19.0"
