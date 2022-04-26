@@ -29,8 +29,8 @@ Nova.booting((Vue, router, store) => {
     Vue.component('HtmlComponent', HtmlComponent)
     Vue.component('GoogleRecaptcha', GoogleRecaptcha)
 
-    store.registerModule(
+  /* store.registerModule(
         'laravel_form_builder_datastore', datastore
-    );
+    );*/
     Nova.inertia('laravelFormBuilder', require('./components/Tool').default)
 })
