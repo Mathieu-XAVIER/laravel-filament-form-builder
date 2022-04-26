@@ -343,7 +343,7 @@
     }
 </script>
 
-<style lang="scss" scoped>
+<style scoped>
     .properties__optionslist {
         margin-bottom: 5px;
         list-style: none;

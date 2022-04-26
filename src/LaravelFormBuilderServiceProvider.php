@@ -23,6 +23,13 @@ class LaravelFormBuilderServiceProvider extends ServiceProvider
         $this->app->booted(function () {
             $this->routes();
 
+            Nova::router()
+                ->group(function ($router) {
+                    $router->get('laravel-form-builder/:id', function ($request) {
+                        return inertia('laravelFormBuilder');
+                    });
+                });
+
             Nova::resources([
                 Form::class,
                 FormResponse::class,

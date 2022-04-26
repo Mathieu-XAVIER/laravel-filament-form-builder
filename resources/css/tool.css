@@ -1,0 +1,6 @@
+@import "element-plus/theme-chalk";
+
+:root {
+    --color-primary: #4099de;
+    --font-path: '/vendor/laravel-form-builder/fonts';
+}

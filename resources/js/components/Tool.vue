@@ -37,7 +37,8 @@
 
 <script>
     import Home from '../views/Home';
-    import {mapGetters} from "vuex";
+    import { v4 as uuidv4 } from 'uuid';
+    import { mapGetters } from "vuex";
 
     export default {
         components: {
@@ -61,7 +62,6 @@
                         formFields.forEach(function (section, sectionKey) {
                             section.fields.forEach(function (field, key) {
                                 if (field.group === 'form' && (!field.name || field.name === '')) {
-                                    const uuidv4 = require('uuid/v4');
                                     field.name = uuidv4();
                                     formFields[sectionKey]['fields'][key] = field;
                                 }

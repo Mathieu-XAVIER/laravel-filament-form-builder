@@ -4,8 +4,8 @@
             <div class="w-2/3 px-2">
                 <div class="wrapper--forms">
                     <el-form>
-                        <template v-for="(eachFormObj, eachFormIndex) in forms">
-                            <div :key="`div-${eachFormIndex}`" class="section-block mb-4">
+                        <template v-for="(eachFormObj, eachFormIndex) in forms" :key="`div-${eachFormIndex}`">
+                            <div class="section-block mb-4">
                                 <div class="source">
                                     <div class="flex flex-wrap">
                                         <div class="w-full text-xs text-bold"
@@ -259,7 +259,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style lang="scss" scoped>
+<style scoped>
     .empty-section {
         text-align: center;
         font-size: 40px;
@@ -298,14 +298,14 @@
         top: 50%;
         transform: translateY(-50%);
         visibility: hidden;
-
-        &:active,
-        &:focus,
-        &:hover {
-            border-color: #409EFF;
-            background: #ECF5FF;
-        }
     }
+
+    .form__actionitem--move:active,
+    .form__actionitem--move:focus,
+    .form__actionitem--move:hover {
+         border-color: #409EFF;
+         background: #ECF5FF;
+     }
 
     .form__actionlist {
         position: absolute;
@@ -318,27 +318,29 @@
         border: 1px solid transparent;
         position: relative;
 
-        &:hover {
-            border-color: #409EFF;
+    }
 
-            .form__actionitem--move,
-            .form__actionlist {
-                visibility: visible;
-            }
-        }
+    .form__group:hover {
+         border-color: #409EFF;
+    }
 
-        &.is--active {
-            border-color: #409EFF;
-            background: #ECF5FF;
+    .form__group:hover .form__actionitem--move,
+    .form__group:hover .form__actionlist {
+        visibility: visible;
+    }
 
-            .form__actionlist {
-                visibility: visible;
-            }
 
-            .form__selectedlabel {
-                display: inline-block;
-            }
-        }
+    .form__group.is--active {
+        border-color: #409EFF;
+        background: #ECF5FF;
+    }
+
+    .form__group.is--active .form__actionlist {
+        visibility: visible;
+    }
+
+    .form__group.is--active .form__selectedlabel {
+        display: inline-block;
     }
 
     .section-block {
@@ -354,5 +356,4 @@
         background-color: #FFF;
         border-top: 1px solid #eaeefb;
     }
-
 </style>

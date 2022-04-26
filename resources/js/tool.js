@@ -1,5 +1,5 @@
-import Element from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/en'
+import Element from 'element-plus'
+import locale from 'element-plus/lib/locale/lang/en'
 import datastore from '@/store'
 import TextInput from '@/components/form_elements/FormElementTextInput'
 import LongTextInput from '@/components/form_elements/FormElementLongTextInput'
@@ -32,12 +32,5 @@ Nova.booting((Vue, router, store) => {
     store.registerModule(
         'laravel_form_builder_datastore', datastore
     );
-
-    router.addRoutes([
-        {
-            name: 'laravel-form-builder',
-            path: '/laravel-form-builder/:id',
-            component: require('./components/Tool'),
-        },
-    ])
+    Nova.inertia('laravelFormBuilder', require('./components/Tool').default)
 })
