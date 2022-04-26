@@ -1,5 +1,9 @@
-let mix = require('laravel-mix');
-let path = require('path');
+const mix = require('laravel-mix');
+const path = require('path');
+
+// Stop webpack emmiting .LICENSE.txt files
+// See https://webpack.js.org/plugins/terser-webpack-plugin/#extractcomments
+mix.options({ terser: { extractComments: false } });
 
 mix.setPublicPath('dist')
   .js('resources/js/tool.js', 'js').vue({ version: 3 })
