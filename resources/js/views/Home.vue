@@ -182,6 +182,8 @@
             cloneElement(sectionIndex, index, field, form) {
                 const cloned = _.cloneDeep(field)
                 let formsTmp = this.forms;
+                const uuidv4 = require('uuid/v4');
+                cloned.name = uuidv4();
                 form.push(cloned);
                 formsTmp[sectionIndex]['fields'] = form
                 this.forms = formsTmp;
