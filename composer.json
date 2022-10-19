@@ -10,6 +10,7 @@
   "license": "AGPL-3.0-or-later",
   "require": {
     "php": "^8.0",
+    "laravel/nova": "~4.0",
     "novius/laravel-form": "dev-dev-upgrade-laravel-9"
   },
   "require-dev": {
@@ -28,6 +29,10 @@
     }
   },
   "repositories": [
+    {
+      "type": "composer",
+      "url": "https://nova.laravel.com"
+    },
     {
       "type": "vcs",
       "url": "git@gitlab.novius.net:lara_libs/laravel-form.git"

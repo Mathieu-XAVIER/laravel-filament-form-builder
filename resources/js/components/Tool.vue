@@ -1,33 +1,32 @@
 <template>
     <div>
-        <heading class="mb-6">
-            <router-link
-                    :to="{
+
+        <Head title="test" />
+
+        <Heading class="mb-6">
+<!--            <router-link
+                :to="{
                   name: 'index',
                   params: {
                     resourceName: 'forms',
                   },
                 }"
-                    class="no-underline text-primary font-bold dim"
+                class="no-underline text-primary font-bold dim"
             >
                 &larr;
-            </router-link>
+            </router-link>-->
             {{ __('form') }}&nbsp;:&nbsp;<span v-text="formName"></span>
-        </heading>
+        </Heading>
 
-        <home :fields="fields"
-              :sortElementOptions="sortElementOptions"
-              :dropElementOptions="dropElementOptions"
-              :options="sharedOptions"
-        />
+        <home :fields="fields" />
 
         <div class="flex items-center">
-            <cancel-button/>
+            <cancel-button />
 
             <button
-                    class="btn btn-default btn-primary inline-flex items-center relative"
-                    type="button"
-                    @click="save"
+                class="btn btn-default btn-primary inline-flex items-center relative"
+                type="button"
+                @click="save"
             >
                 {{ __('Update & Continue Editing') }}
             </button>
@@ -44,11 +43,14 @@
         components: {
             Home,
         },
+        props: {
+            form: Object,
+        },
         mounted() {
             const component = this;
 
             Nova.request({
-                url: '/nova-vendor/laravel-form-builder/form-fields/' + this.$route.params.id,
+                url: '/nova-vendor/laravel-form-builder/form-fields/' + this.form.id,
                 method: 'GET',
             }).then(({data}) => {
                 if (data.error) {
@@ -80,24 +82,6 @@
                 loading: false,
                 formName: '',
                 fields: [],
-                sharedOptions: [],
-                sortElementOptions: {
-                    group: {
-                        name: 'formbuilder',
-                        pull: false,
-                        put: true
-                    },
-                    sort: true
-                },
-                dropElementOptions: {
-                    group: {
-                        name: 'formbuilder',
-                        pull: 'clone',
-                        put: false
-                    },
-                    sort: false,
-                    filter: ".is-disabled"
-                }
             }
         },
         computed: {
@@ -118,7 +102,7 @@
                 const component = this;
 
                 Nova.request({
-                    url: '/nova-vendor/laravel-form-builder/save-fields/' + this.$route.params.id,
+                    url: '/nova-vendor/laravel-form-builder/save-fields/' + this.form.id,
                     method: 'POST',
                     data: {
                         fields: JSON.stringify(component.forms),

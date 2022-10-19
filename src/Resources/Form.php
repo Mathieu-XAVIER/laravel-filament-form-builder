@@ -5,13 +5,17 @@ namespace Novius\LaravelFormBuilder\Resources;
 use App\Nova\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
+use Laravel\Nova\Fields\Markdown;
+use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Textarea;
+use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Form extends Resource
 {
@@ -66,8 +70,7 @@ class Form extends Resource
                 })
                 ->from('name')
                 ->creationRules('unique:forms,slug')
-                ->updateRules('unique:forms,slug,{{resourceId}}')
-                ->disableAutoUpdateWhenUpdating(),
+                ->updateRules('unique:forms,slug,{{resourceId}}'),
 
             Text::make(trans('laravel-form-builder::form.update_fields'), function () {
                 return sprintf('<a class="no-underline dim text-primary font-bold" href="%s">%s</a>', '/admin/laravel-form-builder/'.$this->id, trans('laravel-form-builder::form.update_fields'));
@@ -82,21 +85,33 @@ class Form extends Resource
                 ->hideFromIndex(),
 
 
-            Trix::make(trans('laravel-form-builder::form.success_message_sent'), 'after_sent_message')
+            Markdown::make(trans('laravel-form-builder::form.success_message_sent'), 'after_sent_message')
+                ->hide()
+                ->rules('required_if:after_sent_action,'.\Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE)
                 ->hideFromIndex()
-                ->dependsOn(['after_sent_action'], fn() => \Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE),
+                ->dependsOn('after_sent_action', function (Markdown $field, NovaRequest $request, FormData $formData) {
+                    if ($formData->after_sent_action === \Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE) {
+                        $field->show()->required();
+                    }
+                }),
 
 
             Text::make(trans('laravel-form-builder::form.redirection_url_field'), 'after_sent_redirection_url')
+                ->hide()
                 ->rules('required_if:after_sent_action,'.\Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_REDIRECTION, 'url')
                 ->hideFromIndex()
-                ->dependsOn(['after_sent_action'], fn() => \Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_REDIRECTION),
+                ->dependsOn('after_sent_action', function (Text $field, NovaRequest $request, FormData $formData) {
+                    if ($formData->after_sent_action === \Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_REDIRECTION) {
+                        $field->show()->required();
+                    }
+                }),
 
             Boolean::make(trans('laravel-form-builder::form.enable_mail_notification_field'), 'after_sent_notification'),
 
             Textarea::make(trans('laravel-form-builder::form.notification_recipients_field'), 'after_sent_notification_recipients')
                 ->help(trans('laravel-form-builder::form.mail_notification_recipients_help'))
                 ->rows(3)
+                ->hide()
                 ->rules('required_if:after_sent_notification,'.\Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE, function ($attribute, $value, $fail) {
                     if (!empty($value)) {
                         $emails = explode(',', $value);
@@ -111,13 +126,27 @@ class Form extends Resource
                         }
                     }
                 })
-                ->dependsOnNotEmpty('after_sent_notification')
-                ->required(),
+                ->dependsOn(
+                    ['after_sent_notification'],
+                    function (Textarea $field, NovaRequest $request, FormData $formData) {
+                        if (! empty($formData->after_sent_notification)) {
+                            $field->show()->required();
+                        }
+                    }
+                ),
 
             Text::make(trans('laravel-form-builder::form.notification_subject'), 'after_sent_notification_subject')
                 ->rules('required_if:after_sent_notification,'.\Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE)
                 ->hideFromIndex()
-                ->dependsOnNotEmpty('after_sent_notification')
+                ->hide()
+                ->dependsOn(
+                    ['after_sent_notification'],
+                    function (Text $field, NovaRequest $request, FormData $formData) {
+                        if (! empty($formData->after_sent_notification)) {
+                            $field->show();
+                        }
+                    }
+                )
                 ->required(),
 
             Text::make(trans('laravel-form-builder::form.html_classes'), 'form_element_custom_classes')

@@ -1,43 +1,43 @@
 <template>
     <div class="el-tabs__inner">
-        <div>
-            <draggable :list="fields"
-                       :clone="clone"
-                       class="dragArea flex flex-wrap"
-                       :group="{ name:'formbuilder', pull:'clone', put:false }"
-                       :sort="false"
-                       :move="checkMove"
+        <div class="flex flex-wrap">
+            <div v-for="field in fields" class="lnfb-px-1 lnfb-mb-2 lnfb-w-1/2 field-element"
+                 :class="{'is-disabled': checkStopDragCondition(field)}"
             >
-                <div class="px-1 mb-2 w-1/2 field-element"
-                     :class="{
-                        'is-disabled': checkStopDragCondition(field)
-                    }"
-                     v-for="(field, index) in fields" :key="index"
+                <el-button class="button__sidebar"
+                           draggable="true"
+                           @dragstart="startDrag($event, field)"
+                           @dragend="endDrag($event)"
                 >
-                    <el-button class="button__sidebar">
-                        {{ field.text }}
-                    </el-button>
-                </div>
-            </draggable>
+                    {{ field.text }}
+                </el-button>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
-    import draggable from 'vuedraggable';
     import { v4 as uuidv4 } from 'uuid';
     import { mapGetters } from 'vuex'
 
     export default {
         name: 'Elements',
-        components: {
-            draggable
-        },
         props: [
             'fields',
             'dropElementOptions',
         ],
         methods: {
+            startDrag(evt, field) {
+                evt.target.classList.add("sortable__ghost");
+                evt.dataTransfer.dropEffect = 'move';
+                evt.dataTransfer.effectAllowed = 'move';
+                evt.dataTransfer.setData('fieldType', field.fieldType)
+
+                console.log("start drag", evt)
+            },
+            endDrag(event) {
+                event.target.classList.remove("sortable__ghost");
+            },
             clone(field) {
                 const clonedField = _.cloneDeep(field);
                 if (clonedField.hasOwnProperty('name')) {
@@ -105,7 +105,7 @@
     }
 
 
-    .sortable__ghost [type="button"] {
+    .el-tabs__inner .sortable__ghost {
         display: none;
     }
 

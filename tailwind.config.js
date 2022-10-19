@@ -1,7 +1,7 @@
+/** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: [
-    "./resources/**/*.{vue,js,ts,jsx,tsx}",
-  ],
+  content: ["./resources/**/*.{js,vue}"],
+  prefix: "lnfb-",
   theme: {
     extend: {},
   },
