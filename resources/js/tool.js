@@ -9,7 +9,8 @@ import Radio from '@/components/form_elements/FormElementRadio'
 import Checkbox from '@/components/form_elements/FormElementCheckbox'
 import Consent from '@/components/form_elements/FormElementConsent'
 import GoogleRecaptcha from '@/components/form_elements/FormElementGoogleRecaptcha'
-import Button from '@/components/form_elements/FormElementButton'
+import DangerButton from '@/components/Buttons/DangerButton'
+import DeleteFieldModal from '@/components/Modals/DeleteFieldModal'
 import Upload from '@/components/form_elements/FormElementUpload'
 import HtmlComponent from '@/components/form_elements/FormElementHtml'
 import Tool from '@/components/Tool'
@@ -30,6 +31,8 @@ Nova.booting((app, store) => {
   app.component('Upload', Upload)
   app.component('HtmlComponent', HtmlComponent)
   app.component('GoogleRecaptcha', GoogleRecaptcha)
+  app.component('LnfbDangerButton', DangerButton)
+  app.component('LnfbDeleteFieldModal', DeleteFieldModal)
 
   store.registerModule(
     'laravel_form_builder_datastore', datastore

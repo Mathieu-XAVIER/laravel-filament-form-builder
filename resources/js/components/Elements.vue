@@ -4,13 +4,13 @@
             <div v-for="field in fields" class="lnfb-px-1 lnfb-mb-2 lnfb-w-1/2 field-element"
                  :class="{'is-disabled': checkStopDragCondition(field)}"
             >
-                <el-button class="button__sidebar"
-                           draggable="true"
-                           @dragstart="startDrag($event, field)"
-                           @dragend="endDrag($event)"
-                >
+                <button type="button"
+                        :draggable="! checkStopDragCondition(field)"
+                        @dragstart="startDrag($event, field)"
+                        @dragend="endDrag($event)"
+                        class="button__sidebar lnfb-w-full lnfb-items-center lnfb-border lnfb-border-gray-300 lnfb-bg-white lnfb-px-2.5 lnfb-py-1.5 lnfb-text-xs lnfb-font-medium lnfb-text-gray-700 lnfb-shadow-sm hover:lnfb-bg-gray-50 lnfb-focus:outline-none lnfb-focus:ring-2 lnfb-focus:ring-indigo-500 lnfb-focus:ring-offset-2">
                     {{ field.text }}
-                </el-button>
+                </button>
             </div>
         </div>
     </div>
@@ -32,8 +32,6 @@
                 evt.dataTransfer.dropEffect = 'move';
                 evt.dataTransfer.effectAllowed = 'move';
                 evt.dataTransfer.setData('fieldType', field.fieldType)
-
-                console.log("start drag", evt)
             },
             endDrag(event) {
                 event.target.classList.remove("sortable__ghost");
@@ -62,9 +60,6 @@
 
                 return _.includes(formArray, field.fieldType) && field.isUnique;
             },
-            checkMove (evt){
-                return ! this.checkStopDragCondition(evt.draggedContext.element);
-            }
         },
         computed: {
             ...mapGetters('laravel_form_builder_datastore', {
@@ -83,43 +78,12 @@
 </script>
 
 <style scoped>
-    .button__sidebar {
-        width: 100%;
-        margin-bottom: 5px;
-        padding: .5rem 1rem;
-    }
-
-    .button__sidebar.is-disabled {
-        opacity: .4;
-        cursor: not-allowed;
-    }
-
-    /* Display this ghost in <main> only*/
-
-    .sortable__ghost {
-        position: relative;
-        width: 33.33%;
-        border-bottom: 2px solid #3A8EE6;
-        margin-top: 2px;
-        margin-bottom: 2px;
-    }
-
-
     .el-tabs__inner .sortable__ghost {
-        display: none;
+        opacity: .4;
     }
 
-    .sortable__ghost::before {
-        content: "Drag it here";
-        background-color: #ECF5FF;
-        color: #3A8EE6;
-        position: absolute;
-        left: 50%;
-        font-size: 10px;
-        border-radius: 10px;
-        line-height: 15px;
-        padding: 0 10px;
-        top: -6px;
-        transform: translateX(-50%);
+    .el-tabs__inner .is-disabled .button__sidebar {
+        cursor: not-allowed;
+        opacity: .4;
     }
 </style>

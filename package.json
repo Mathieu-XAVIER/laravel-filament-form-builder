@@ -11,6 +11,7 @@
     "nova:install": "npm --prefix='../../vendor/laravel/nova' ci"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "^0.5.3",
     "@vue/compiler-sfc": "^3.2.22",
     "laravel-mix": "^6.0.41",
     "postcss": "^8.3.11",

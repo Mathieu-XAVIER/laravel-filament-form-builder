@@ -4,9 +4,9 @@
                v-text="currentField.label">
         </label>
 
-        <el-input-number controls-position="right"
-                         v-bind="attributesBinding">
-        </el-input-number>
+        <input type="number"
+               class="lnfb-form-input"
+               v-bind="attributesBinding" />
 
         <div v-if="currentField.help"
              v-text="currentField.help"
