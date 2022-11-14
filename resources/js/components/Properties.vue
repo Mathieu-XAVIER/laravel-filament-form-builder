@@ -69,7 +69,6 @@
                         {{ __('chars_limit') }}
                     </label>
                     <el-input-number :min="1"
-                                     :max="255"
                                      controls-position="right"
                                      v-model="activeField.maxlength"></el-input-number>
                 </div>
