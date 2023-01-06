@@ -1,4 +1,4 @@
-import ElementPlus from 'element-plus'
+//import ElementPlus from 'element-plus'
 import locale from 'element-plus/lib/locale/lang/en'
 import datastore from '@/store'
 import TextInput from '@/components/form_elements/FormElementTextInput'
@@ -10,6 +10,11 @@ import Checkbox from '@/components/form_elements/FormElementCheckbox'
 import Consent from '@/components/form_elements/FormElementConsent'
 import GoogleRecaptcha from '@/components/form_elements/FormElementGoogleRecaptcha'
 import DangerButton from '@/components/Buttons/DangerButton'
+import Input from '@/components/Forms/Input'
+import InputNumber from '@/components/Forms/InputNumber'
+import Select from '@/components/Forms/Select'
+import Textarea from '@/components/Forms/Textarea'
+import Toggle from '@/components/Forms/Toggle'
 import DeleteFieldModal from '@/components/Modals/DeleteFieldModal'
 import Upload from '@/components/form_elements/FormElementUpload'
 import HtmlComponent from '@/components/form_elements/FormElementHtml'
@@ -17,9 +22,7 @@ import Tool from '@/components/Tool'
 
 Nova.booting((app, store) => {
 
-  console.log(app);
-
-  app.use(ElementPlus)
+  //app.use(ElementPlus)
   app.component('TextInput', TextInput)
   app.component('LongTextInput', LongTextInput)
   app.component('NumberInput', NumberInput)
@@ -31,6 +34,12 @@ Nova.booting((app, store) => {
   app.component('Upload', Upload)
   app.component('HtmlComponent', HtmlComponent)
   app.component('GoogleRecaptcha', GoogleRecaptcha)
+
+  app.component('LnfbInput', Input)
+  app.component('LnfbInputNumber', InputNumber)
+  app.component('LnfbSelect', Select)
+  app.component('LnfbTextarea', Textarea)
+  app.component('LnfbToggle', Toggle)
   app.component('LnfbDangerButton', DangerButton)
   app.component('LnfbDeleteFieldModal', DeleteFieldModal)
 

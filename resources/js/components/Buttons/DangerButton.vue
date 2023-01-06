@@ -28,11 +28,5 @@ export default {
       default: 'button',
     },
   },
-
-  methods: {
-    focus() {
-      this.$refs.button.focus()
-    },
-  },
 }
 </script>

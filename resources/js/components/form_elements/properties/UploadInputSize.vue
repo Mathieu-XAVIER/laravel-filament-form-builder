@@ -1,8 +1,9 @@
 <template>
     <div>
-        <el-input-number v-model="activeField.maxSize"
-                         :min="500"
-                         controls-position="right"></el-input-number>
+        <lnfb-input-number :label="__('chars_limit')"
+                           v-model="activeField.maxSize"
+                           :min="500" />
+
         <div class="text-xs leading-loose">
             <span v-text="activeField.maxSize"></span> KB (<span v-text="sizeMo"></span> Mo)
         </div>
