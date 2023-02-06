@@ -1,19 +1,19 @@
 <template>
-    <div>
-        <label v-bind:for="uuid"
-               v-text="label"
-               class="lnfb-block lnfb-text-sm lnfb-font-medium lnfb-text-gray-700"/>
+  <div>
+    <label v-bind:for="uuid"
+           v-text="label"
+           class="lnfb-block lnfb-text-sm lnfb-font-medium lnfb-text-gray-700"/>
 
-        <div class="lnfb-mt-1">
-            <input type="number"
-                   v-bind="$attrs"
-                   :value="modelValue"
-                   @input="$emit('update:modelValue', $event.target.value)"
-                   v-bind:id="uuid"
-                   class="form-input lnfb-py-2 lnfb-block lnfb-w-full lnfb-rounded-md lnfb-border-gray-300 lnfb-shadow-sm focus:lnfb-border-indigo-500 focus:lnfb-ring-indigo-500 sm:lnfb-text-sm"
-                   placeholder=""/>
-        </div>
+    <div class="lnfb-mt-1">
+      <input type="number"
+             v-bind="$attrs"
+             :value="modelValue"
+             @input="$emit('update:modelValue', $event.target.value)"
+             v-bind:id="uuid"
+             class="form-input lnfb-py-2 lnfb-block lnfb-w-full lnfb-rounded-md lnfb-border-gray-300 lnfb-shadow-sm focus:lnfb-border-indigo-500 focus:lnfb-ring-indigo-500 sm:lnfb-text-sm"
+             placeholder=""/>
     </div>
+  </div>
 </template>
 
 <script setup>
@@ -26,6 +26,6 @@ defineEmits(['update:modelValue'])
 const uuid = ref('')
 
 onMounted(() => {
-    uuid.value = uuidv4()
+  uuid.value = uuidv4()
 })
 </script>

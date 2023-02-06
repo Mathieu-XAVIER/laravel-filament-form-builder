@@ -1,6 +1,6 @@
 <template>
-<div v-html="currentField.htmlContent">
-</div>
+  <div v-html="currentField.htmlContent">
+  </div>
 </template>
 
 <script>

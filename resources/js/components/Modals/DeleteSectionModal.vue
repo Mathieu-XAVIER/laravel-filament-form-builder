@@ -13,12 +13,8 @@
           Suppression
         </ModalHeader>
         <ModalContent>
-          <p class="lnfb-leading-normal" v-if="field.label">
-            Êtes-vous sûr de vouloir supprimer le champ "<span v-text="field.label"></span>" ?
-          </p>
-
-          <p class="lnfb-leading-normal" v-if="!field.label">
-            Êtes-vous sûr de vouloir supprimer ce champ ?
+          <p class="lnfb-leading-normal">
+            Êtes-vous sûr de vouloir supprimer cette section ?
           </p>
         </ModalContent>
       </slot>
@@ -38,7 +34,6 @@
           >
             Supprimer
           </LnfbDangerButton>
-
         </div>
       </ModalFooter>
     </form>
@@ -46,15 +41,11 @@
 </template>
 
 <script>
-import startCase from 'lodash/startCase'
-
 export default {
   emits: ['confirm', 'close'],
 
   props: {
     show: { type: Boolean, default: false },
-
-    field: { type: Object, required: true },
   },
 
   data: () => ({
@@ -71,15 +62,6 @@ export default {
       this.$emit('confirm')
       this.working = true
     },
-  },
-
-  /**
-   * Mount the component.
-   */
-  mounted() {
-    this.$nextTick(() => {
-      // this.$refs.confirmButton.button.focus()
-    })
   },
 }
 </script>

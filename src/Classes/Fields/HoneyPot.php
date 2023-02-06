@@ -2,16 +2,16 @@
 
 namespace Novius\LaravelFormBuilder\Classes\Fields;
 
-class Button extends AbstractField
+class HoneyPot extends AbstractField
 {
-    public static $model = \Novius\LaravelForm\Classes\Fields\Button::class;
+    public static $model = \Novius\LaravelForm\Classes\Fields\HoneyPot::class;
 
     /**
      * {@inheritdoc}
      */
     public function position(): int
     {
-        return 12;
+        return 10;
     }
 
     /**
@@ -20,8 +20,7 @@ class Button extends AbstractField
     public function params(): array
     {
         return array_merge((static::newModel())->defaultParams(), [
-            'text' => trans('laravel-form-builder::fields.button_field_name'),
-            'group' => 'button',
+            'text' => trans('laravel-form-builder::fields.honeypot_field_name'),
             'isUnique' => true,
         ]);
     }

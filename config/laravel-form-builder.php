@@ -21,5 +21,6 @@ return [
         'SelectList' => \Novius\LaravelFormBuilder\Classes\Fields\SelectList::class,
         'TextInput' => \Novius\LaravelFormBuilder\Classes\Fields\TextInput::class,
         'Upload' => \Novius\LaravelFormBuilder\Classes\Fields\UploadInput::class,
+        'HoneyPot' => \Novius\LaravelFormBuilder\Classes\Fields\HoneyPot::class,
     ],
 ];

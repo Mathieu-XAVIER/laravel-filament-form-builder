@@ -12,4 +12,5 @@ return [
     'text_field_name' => 'Text',
     'upload_field_name' => 'File',
     'checkbox_field_name' => 'Checkboxes',
+    'honeypot_field_name' => 'Honeypot',
 ];
