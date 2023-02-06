@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Novius\LaravelFormBuilder\Actions\ExportAnswers;
 use Novius\LaravelFormBuilder\Filters\ResponseDateFromFilter;
 use Novius\LaravelFormBuilder\Filters\ResponseDateToFilter;
 
@@ -146,6 +147,8 @@ class FormResponse extends Resource
      */
     public function actions(Request $request)
     {
-        return [];
+        return [
+            ExportAnswers::make(),
+        ];
     }
 }

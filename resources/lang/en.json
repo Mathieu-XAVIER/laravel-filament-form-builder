@@ -47,5 +47,10 @@
   "min_value": "Min",
   "has_max_value": "Has max value",
   "max_value": "Max",
-  "decimals_count": "Decimals number"
+  "decimals_count": "Decimals number",
+  "back_to_form_edition": "back to form edition",
+  "honeypot_field_name": "HoneyPot fieldname",
+  "honeypot_field_label": "HoneyPot label (invisible)",
+  "drop_it_here": "Drop it here",
+  "move_it_here": "Move it here"
 }

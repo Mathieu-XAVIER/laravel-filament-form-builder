@@ -50,5 +50,7 @@
   "decimals_count": "Nombre de décimales",
   "back_to_form_edition": "Retour à l'édition du formulaire",
   "honeypot_field_name": "Attribut name du champ HoneyPot",
-  "honeypot_field_label": "Label du champ HoneyPot (invisible)"
+  "honeypot_field_label": "Label du champ HoneyPot (invisible)",
+  "drop_it_here": "Déposer ici",
+  "move_it_here": "Déplacer ici"
 }

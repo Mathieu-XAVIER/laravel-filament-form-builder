@@ -12,14 +12,12 @@ use Laravel\Nova\Fields\Markdown;
 use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Trix;
 use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
 class Form extends Resource
 {
-
     /**
      * The model the resource corresponds to.
      *
@@ -84,7 +82,6 @@ class Form extends Resource
                 ->rules('required', 'in:'.implode(',', \Novius\LaravelForm\Models\Form::afterSentActionsIds()))
                 ->hideFromIndex(),
 
-
             Markdown::make(trans('laravel-form-builder::form.success_message_sent'), 'after_sent_message')
                 ->hide()
                 ->rules('required_if:after_sent_action,'.\Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE)
@@ -94,7 +91,6 @@ class Form extends Resource
                         $field->show()->required();
                     }
                 }),
-
 
             Text::make(trans('laravel-form-builder::form.redirection_url_field'), 'after_sent_redirection_url')
                 ->hide()
@@ -129,7 +125,7 @@ class Form extends Resource
                 ->dependsOn(
                     ['after_sent_notification'],
                     function (Textarea $field, NovaRequest $request, FormData $formData) {
-                        if (! empty($formData->after_sent_notification)) {
+                        if (!empty($formData->after_sent_notification)) {
                             $field->show()->required();
                         }
                     }
@@ -142,7 +138,7 @@ class Form extends Resource
                 ->dependsOn(
                     ['after_sent_notification'],
                     function (Text $field, NovaRequest $request, FormData $formData) {
-                        if (! empty($formData->after_sent_notification)) {
+                        if (!empty($formData->after_sent_notification)) {
                             $field->show();
                         }
                     }

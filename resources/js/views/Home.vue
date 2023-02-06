@@ -1,6 +1,6 @@
 <template>
   <div class="lnfb-mb-4">
-    <div class="lnfb-flex">
+    <div class="lnfb-flex lnfb-items-start">
       <div class="lnfb-w-2/3 lnfb-pr-2">
         <div>
           <template v-for="(eachFormObj, sectionIndex) in forms"
@@ -14,8 +14,8 @@
 
             <div class="section-block lnfb-mb-4">
               <div class="lnfb-p-2">
-                <div class="flex flex-wrap">
-                  <div class="w-full text-xs text-bold"
+                <div class="lnfb-flex lnfb-flex-wrap">
+                  <div class="lnfb-w-full lnfb-text-xs lnfb-text-bold"
                        :class="{
                         'lnfb-mb-2': forms.length > 1,
                        }">
@@ -23,7 +23,7 @@
                   </div>
                   <div class="lnfb-w-2/3">
                     <div v-if="forms.length > 1">
-                      <label class="block text-sm font-bold mb-2"
+                      <label class="lnfb-block lnfb-text-sm lnfb-font-bold lnfb-mb-2"
                              v-bind:for="`section-title-${sectionIndex}`">
                         {{ __('section_title') }}
                       </label>
@@ -54,8 +54,8 @@
                   ref="dragArea"
                   class="js-dragArea dragArea flex flex-wrap w-full"
                   :class="{
-                                                   'w-full lnfb-py-6 lnfb-border-dashed lnfb-border-4 lnfb-border-30': !eachFormObj.fields.length,
-                                         }"
+                      'w-full lnfb-py-6 lnfb-border-dashed lnfb-border-4 lnfb-border-30': !eachFormObj.fields.length,
+                  }"
                   @drop="onDrop($event, sectionIndex, eachFormObj.fields)"
                   @dragover.prevent="onDragOver($event, sectionIndex, eachFormObj.fields)"
                   @dragleave.prevent="onDragLeave($event, sectionIndex, eachFormObj.fields)"
@@ -131,7 +131,7 @@
           {{ __('add_section') }}
         </LnfbBasicButton>
       </div>
-      <div class="wrapper--sidebar lnfb-w-1/3 lnfb-px-2 lnfb-bg-white">
+      <div class="lnfb-w-1/3 lnfb-px-2 lnfb-bg-white lnfb-sticky lnfb-top-2">
         <div class="lnfb-border-b lnfb-border-gray-200 lnfb-mb-4">
           <nav class="lnfb--mb-px lnfb-flex lnfb-space-x-8"
                aria-label="Tabs"
@@ -173,7 +173,6 @@ import Elements from '@/components/Elements'
 import Properties from '@/components/Properties'
 import { mapGetters } from 'vuex'
 import { v4 as uuidv4 } from "uuid";
-import { insertNodeAt } from "../utils/helpers";
 
 export default {
 
@@ -195,6 +194,7 @@ export default {
   methods: {
     onDrop(evt, sectionIndex, fields) {
       if (this.sortableSelected) {
+        this.onDropSortablePosition(evt, sectionIndex, fields);
         return;
       }
 
@@ -217,6 +217,43 @@ export default {
       formsTmp[sectionIndex]['fields'] = fields
       this.forms = formsTmp;
     },
+    onDropSortablePosition(evt, sectionIndex, fields) {
+      let ghostIndex = [...this.$refs.dragArea[sectionIndex].children].findIndex(c => c.classList.contains('js-ghost'));
+      if (ghostIndex === -1) {
+        this.sortableSelected = null;
+
+        return;
+      }
+
+      const fieldName = this.sortableSelected.name;
+      const currentIndex = fields.findIndex(f => f.name === fieldName);
+      if (currentIndex === -1) {
+        this.sortableSelected = null;
+
+        return;
+      }
+
+      if (ghostIndex === currentIndex) {
+        this.sortableSelected = null;
+
+        return;
+      }
+
+      // Delete field from array
+      fields.splice(currentIndex, 1);
+      // Delete ghost from DOM
+      this.$refs.dragArea[sectionIndex].querySelectorAll(".js-ghost").forEach(e => e.remove());
+      if (ghostIndex > currentIndex) {
+        ghostIndex--;
+      }
+      // Re-insert field at selected index
+      fields.splice(ghostIndex, 0, _.cloneDeep(this.sortableSelected));
+
+      let formsTmp = this.forms;
+      formsTmp[sectionIndex]['fields'] = fields
+      this.forms = formsTmp;
+      this.sortableSelected = null;
+    },
     onDragLeave(evt, sectionIndex, fields) {
       if (this.sortableSelected) {
         return;
@@ -225,10 +262,6 @@ export default {
       this.$refs.dragArea[sectionIndex].querySelectorAll(".js-ghost").forEach(e => e.remove());
     },
     onDragOver(evt, sectionIndex, fields) {
-      if (this.sortableSelected) {
-        return;
-      }
-
       const parent = evt.target.closest('.js-dragArea');
       if (parent == null)
         return;
@@ -239,7 +272,7 @@ export default {
         const field = evt.target.closest('.js-field');
         const nodeIndex = [...parent.children].findIndex(c => c == field);
         if (nodeIndex !== -1) {
-          parent.insertBefore(this.ghostNode(), field);
+          parent.insertBefore(this.ghostNode(this.sortableSelected ? true : false), field);
           return;
         }
       }
@@ -249,25 +282,27 @@ export default {
         const nodeIndex = [...parent.children].findIndex(c => c == field);
         if (nodeIndex !== -1) {
           if (parent.lastChild == field) {
-            parent.appendChild(this.ghostNode());
+            parent.appendChild(this.ghostNode(this.sortableSelected ? true : false));
           } else {
-            parent.insertBefore(this.ghostNode(), field.nextSibling);
+            parent.insertBefore(this.ghostNode(this.sortableSelected ? true : false), field.nextSibling);
           }
           return;
         }
       }
 
       if (parent === evt.target) {
-        parent.appendChild(this.ghostNode());
+        parent.appendChild(this.ghostNode(this.sortableSelected ? true : false));
       }
     },
     startSortableDrag(evt, field) {
+      evt.target.classList.add("drag-position-in-progress");
       this.sortableSelected = field;
       evt.dataTransfer.dropEffect = 'move';
       evt.dataTransfer.effectAllowed = 'move';
     },
     endSortableDrag(evt) {
       this.sortableSelected = null;
+      evt.target.classList.remove("drag-position-in-progress");
     },
     deleteElement(sectionIndex, fieldIndex, fields) {
       this.activeField = [];
@@ -310,18 +345,21 @@ export default {
 
       this.forms = formsTmp;
     },
-    ghostNode() {
+    ghostNode(isSortableGhost) {
       const ghost = document.createElement("div");
       ghost.classList.add(
         'js-ghost',
         'ghost-field',
-        'lnfb-bg-red-500',
+        'lnfb-bg-sky-200',
         'lnfb-p-2',
         'lnfb-w-1/2',
         'lnfb-text-center',
         'lnfb-text-sm',
       );
-      ghost.appendChild(document.createTextNode('Drag it here'))
+
+      ghost.appendChild(
+        document.createTextNode(isSortableGhost ? this.__('move_it_here') : this.__('drop_it_here'))
+      );
 
       return ghost;
     }
@@ -387,7 +425,10 @@ export default {
 .form__group {
   border: 1px solid transparent;
   position: relative;
+}
 
+.drag-position-in-progress {
+  opacity: .4;
 }
 
 .form__group:hover {

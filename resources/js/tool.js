@@ -23,8 +23,6 @@ import HtmlComponent from '@/components/FormElements/FormElementHtml'
 import Tool from '@/components/Tool'
 
 Nova.booting((app, store) => {
-
-  //app.use(ElementPlus)
   app.component('LnfbTextInput', TextInput)
   app.component('LnfbLongTextInput', LongTextInput)
   app.component('LnfbNumberInput', NumberInput)

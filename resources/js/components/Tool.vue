@@ -5,7 +5,7 @@
     </Heading>
 
     <div class="lnfb-mb-2">
-      <Link class="text-primary-500 lnfb-flex lnfb-items-center"
+      <Link class="text-primary-500 lnfb-inline-flex lnfb-items-center"
             :href="$url(`/resources/forms/${this.form.id}`)"
       >
         <svg class="lnfb-h-4 lnfb-w-4 lnfb-fill-current lnfb-mr-1" viewBox="0 0 20 20">

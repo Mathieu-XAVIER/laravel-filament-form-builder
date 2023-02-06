@@ -42,7 +42,7 @@
              v-if="activeField.hasOwnProperty('maxlength')"
         >
           <lnfb-input-number :label="__('chars_limit')"
-                             v-model="activeField.maxlength"
+                             v-model.number="activeField.maxlength"
                              :min="1"/>
         </div>
 
