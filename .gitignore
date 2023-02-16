@@ -1,4 +1,5 @@
 /.idea
+/.vscode
 /vendor
 /node_modules
 composer.phar
@@ -9,3 +10,4 @@ phpunit.xml
 Thumbs.db
 .php_cs.cache
 dist/fonts
+auth.json

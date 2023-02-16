@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
 use Laravel\Nova\Nova;
 use Novius\LaravelFormBuilder\Http\Middleware\Authorize;
+use Laravel\Nova\Http\Middleware\Authenticate;
 use Novius\LaravelFormBuilder\Resources\Form;
 use Novius\LaravelFormBuilder\Resources\FormResponse;
 
@@ -36,7 +37,7 @@ class LaravelFormBuilderServiceProvider extends ServiceProvider
         $this->publishes([__DIR__.'/../config' => config_path()], 'config');
 
         $this->loadTranslationsFrom($packageDir.'/resources/lang', 'laravel-form-builder');
-        $this->publishes([__DIR__.'/../resources/lang' => resource_path('lang/vendor/laravel-form-builder')], 'lang');
+        $this->publishes([__DIR__.'/../resources/lang' => lang_path('vendor/laravel-form-builder')], 'lang');
 
         $this->publishes([
             __DIR__.'/../dist/assets' => public_path('vendor/laravel-form-builder'),
@@ -54,9 +55,12 @@ class LaravelFormBuilderServiceProvider extends ServiceProvider
             return;
         }
 
+        Nova::router(['nova', Authenticate::class, Authorize::class], 'laravel-form-builder')
+            ->group(__DIR__.'/../routes/inertia.php');
+
         Route::middleware(['nova', Authorize::class])
-                ->prefix('nova-vendor/laravel-form-builder')
-                ->group(__DIR__.'/../routes/api.php');
+            ->prefix('nova-vendor/laravel-form-builder')
+            ->group(__DIR__.'/../routes/api.php');
     }
 
     /**

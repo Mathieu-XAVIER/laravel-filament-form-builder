@@ -1,43 +1,53 @@
-import Element from 'element-ui'
-import locale from 'element-ui/lib/locale/lang/en'
 import datastore from '@/store'
-import TextInput from '@/components/form_elements/FormElementTextInput'
-import LongTextInput from '@/components/form_elements/FormElementLongTextInput'
-import NumberInput from '@/components/form_elements/FormElementNumberInput'
-import SelectList from '@/components/form_elements/FormElementSelectList'
-import Radio from '@/components/form_elements/FormElementRadio'
-import Checkbox from '@/components/form_elements/FormElementCheckbox'
-import Consent from '@/components/form_elements/FormElementConsent'
-import GoogleRecaptcha from '@/components/form_elements/FormElementGoogleRecaptcha'
-import Button from '@/components/form_elements/FormElementButton'
-import Upload from '@/components/form_elements/FormElementUpload'
-import HtmlComponent from '@/components/form_elements/FormElementHtml'
+import TextInput from '@/components/FormElements/FormElementTextInput'
+import LongTextInput from '@/components/FormElements/FormElementLongTextInput'
+import NumberInput from '@/components/FormElements/FormElementNumberInput'
+import SelectList from '@/components/FormElements/FormElementSelectList'
+import Radio from '@/components/FormElements/FormElementRadio'
+import Checkbox from '@/components/FormElements/FormElementCheckbox'
+import Consent from '@/components/FormElements/FormElementConsent'
+import GoogleRecaptcha from '@/components/FormElements/FormElementGoogleRecaptcha'
+import HoneyPot from '@/components/FormElements/FormElementHoneyPot'
+import BasicButton from '@/components/Buttons/BasicButton'
+import DangerButton from '@/components/Buttons/DangerButton'
+import Input from '@/components/Forms/Input'
+import Button from '@/components/FormElements/FormElementButton'
+import InputNumber from '@/components/Forms/InputNumber'
+import Select from '@/components/Forms/Select'
+import Textarea from '@/components/Forms/Textarea'
+import Toggle from '@/components/Forms/Toggle'
+import DeleteFieldModal from '@/components/Modals/DeleteFieldModal'
+import DeleteSectionModal from '@/components/Modals/DeleteSectionModal'
+import Upload from '@/components/FormElements/FormElementUpload'
+import HtmlComponent from '@/components/FormElements/FormElementHtml'
+import Tool from '@/components/Tool'
 
-Nova.booting((Vue, router, store) => {
+Nova.booting((app, store) => {
+  app.component('LnfbTextInput', TextInput)
+  app.component('LnfbLongTextInput', LongTextInput)
+  app.component('LnfbNumberInput', NumberInput)
+  app.component('LnfbSelectList', SelectList)
+  app.component('LnfbRadio', Radio)
+  app.component('LnfbCheckbox', Checkbox)
+  app.component('LnfbConsent', Consent)
+  app.component('LnfbButton', Button)
+  app.component('LnfbUpload', Upload)
+  app.component('LnfbHtmlComponent', HtmlComponent)
+  app.component('LnfbGoogleRecaptcha', GoogleRecaptcha)
+  app.component('LnfbHoneyPot', HoneyPot)
+  app.component('LnfbInput', Input)
+  app.component('LnfbInputNumber', InputNumber)
+  app.component('LnfbSelect', Select)
+  app.component('LnfbTextarea', Textarea)
+  app.component('LnfbToggle', Toggle)
+  app.component('LnfbBasicButton', BasicButton)
+  app.component('LnfbDangerButton', DangerButton)
+  app.component('LnfbDeleteFieldModal', DeleteFieldModal)
+  app.component('LnfbDeleteSectionModal', DeleteSectionModal)
 
-    Vue.use(Element, {locale})
+  store.registerModule(
+    'laravel_form_builder_datastore', datastore
+  );
 
-    Vue.component('TextInput', TextInput)
-    Vue.component('LongTextInput', LongTextInput)
-    Vue.component('NumberInput', NumberInput)
-    Vue.component('SelectList', SelectList)
-    Vue.component('Radio', Radio)
-    Vue.component('Checkbox', Checkbox)
-    Vue.component('Consent', Consent)
-    Vue.component('Button', Button)
-    Vue.component('Upload', Upload)
-    Vue.component('HtmlComponent', HtmlComponent)
-    Vue.component('GoogleRecaptcha', GoogleRecaptcha)
-
-    store.registerModule(
-        'laravel_form_builder_datastore', datastore
-    );
-
-    router.addRoutes([
-        {
-            name: 'laravel-form-builder',
-            path: '/laravel-form-builder/:id',
-            component: require('./components/Tool'),
-        },
-    ])
-})
+  Nova.inertia('LaravelFormBuilder', Tool)
+});
