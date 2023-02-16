@@ -11,7 +11,7 @@
   "require": {
     "php": "^8.0",
     "laravel/nova": "~4.0",
-    "novius/laravel-form": "dev-dev-upgrade-laravel-9"
+    "novius/laravel-form": "^1.0"
   },
   "require-dev": {
     "friendsofphp/php-cs-fixer": "^v3.8.0"
