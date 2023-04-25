@@ -81,7 +81,7 @@ class FormResponse extends Resource
         $totalResponses = count($responses);
 
         foreach ($responses as $response) {
-            $responseFields[] = sprintf('<div class="py-1"><strong>%s :&nbsp;</strong><span>%s</span></div>', $response['label'], $response['value']);
+            $responseFields[] = sprintf('<div class="py-1"><strong>%s :&nbsp;</strong><span style="white-space: break-spaces">%s</span></div>', $response['label'], $response['value']);
             if ($totalResponses > $fieldsLimit && count($responseFields) >= $fieldsLimit) {
                 $responseFields[] = '...';
 
