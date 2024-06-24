@@ -1,7 +1,8 @@
 /*!
- * vuex v4.0.2
- * (c) 2021 Evan You
- * @license MIT
+ * The buffer module from node.js, for the browser.
+ *
+ * @author   Feross Aboukhadijeh <http://feross.org>
+ * @license  MIT
  */
 
 /*!
@@ -9,3 +10,5 @@
  * (c) 2022 Evan You
  * @license MIT
  */
+
+/*! ieee754. BSD-3-Clause License. Feross Aboukhadijeh <https://feross.org/opensource> */

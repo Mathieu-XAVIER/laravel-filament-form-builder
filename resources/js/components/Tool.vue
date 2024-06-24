@@ -24,14 +24,19 @@
     <div
       class="lnfb-flex lnfb-flex-col md:lnfb-flex-row md:lnfb-items-center lnfb-justify-center md:lnfb-justify-end lnfb-space-y-2 md:lnfb-space-y-0 lnfb-space-x-3"
     >
-      <CancelButton/>
+      <Button
+        dusk="cancel-update-button"
+        variant="ghost"
+        :label="__('Cancel')"
+        @click="cancelUpdatingForm"
+      />
 
-      <LoadingButton
+      <Button
         @click="save"
         align="center"
       >
         {{ __('Update & Continue Editing') }}
-      </LoadingButton>
+      </Button>
     </div>
   </div>
 </template>
@@ -40,9 +45,11 @@
 import Home from '../views/Home';
 import { v4 as uuidv4 } from 'uuid';
 import { mapGetters } from "vuex";
+import { Button } from 'laravel-nova-ui'
 
 export default {
   components: {
+    Button,
     Home,
   },
   props: {
@@ -121,6 +128,10 @@ export default {
         Nova.error('Unexpected error')
       });
     },
+
+    cancelUpdatingForm() {
+      Nova.visit(`/resources/forms/${this.form.id}`)
+    }
   }
 }
 </script>
