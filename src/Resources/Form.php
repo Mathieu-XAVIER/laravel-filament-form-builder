@@ -5,14 +5,14 @@ namespace Novius\LaravelFormBuilder\Resources;
 use App\Nova\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
+use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\FormData;
 use Laravel\Nova\Fields\HasMany;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Markdown;
+use Laravel\Nova\Fields\Select;
 use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
-use Laravel\Nova\Fields\Select;
-use Laravel\Nova\Fields\Boolean;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
 
@@ -49,7 +49,6 @@ class Form extends Resource
     /**
      * Get the fields displayed by the resource.
      *
-     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function fields(Request $request)
@@ -62,7 +61,7 @@ class Form extends Resource
 
             Slug::make(trans('laravel-form-builder::form.slug'), 'slug')
                 ->rules('required', 'max:191', function ($attribute, $value, $fail) {
-                    if (!preg_match('/^[a-z][-a-z0-9]*$/', $value)) {
+                    if (! preg_match('/^[a-z][-a-z0-9]*$/', $value)) {
                         return $fail('The '.$attribute.' field must be a valid slug.');
                     }
                 })
@@ -109,14 +108,14 @@ class Form extends Resource
                 ->rows(3)
                 ->hide()
                 ->rules('required_if:after_sent_notification,'.\Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE, function ($attribute, $value, $fail) {
-                    if (!empty($value)) {
+                    if (! empty($value)) {
                         $emails = explode(',', $value);
                         foreach ($emails as $email) {
                             $validator = Validator::make(['email' => $email], [
                                 'email' => 'required|email',
                             ]);
 
-                            if (!$validator->passes()) {
+                            if (! $validator->passes()) {
                                 return $fail(trans('laravel-form-builder::form.notification_recipients_format_error'));
                             }
                         }
@@ -125,7 +124,7 @@ class Form extends Resource
                 ->dependsOn(
                     ['after_sent_notification'],
                     function (Textarea $field, NovaRequest $request, FormData $formData) {
-                        if (!empty($formData->after_sent_notification)) {
+                        if (! empty($formData->after_sent_notification)) {
                             $field->show()->required();
                         }
                     }
@@ -138,7 +137,7 @@ class Form extends Resource
                 ->dependsOn(
                     ['after_sent_notification'],
                     function (Text $field, NovaRequest $request, FormData $formData) {
-                        if (!empty($formData->after_sent_notification)) {
+                        if (! empty($formData->after_sent_notification)) {
                             $field->show();
                         }
                     }
@@ -155,7 +154,6 @@ class Form extends Resource
     /**
      * Get the cards available for the request.
      *
-     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function cards(Request $request)
@@ -166,7 +164,6 @@ class Form extends Resource
     /**
      * Get the filters available for the resource.
      *
-     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function filters(Request $request)
@@ -177,7 +174,6 @@ class Form extends Resource
     /**
      * Get the lenses available for the resource.
      *
-     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function lenses(Request $request)
@@ -188,7 +184,6 @@ class Form extends Resource
     /**
      * Get the actions available for the resource.
      *
-     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function actions(Request $request)

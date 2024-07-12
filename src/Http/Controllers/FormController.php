@@ -14,12 +14,12 @@ class FormController extends Controller
         $form = Form::findOrFail($id);
         $defaultfields = collect(config('laravel-form-builder.fields_type_matching', []))
             ->map(function ($class, $component) {
-                if (!class_exists($class)) {
+                if (! class_exists($class)) {
                     return [];
                 }
 
                 $field = new $class();
-                if (!$field instanceof AbstractField) {
+                if (! $field instanceof AbstractField) {
                     return [];
                 }
 
@@ -38,7 +38,7 @@ class FormController extends Controller
 
         return response()->json([
             'defaultFields' => $defaultfields->all(),
-            'fields' => !empty($form->fields) ? $form->fields : $this->initialInterfaceFields(),
+            'fields' => ! empty($form->fields) ? $form->fields : $this->initialInterfaceFields(),
             'error' => 0,
             'formName' => $form->name,
         ]);

@@ -4,9 +4,9 @@ namespace Novius\LaravelFormBuilder;
 
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\ServiceProvider;
+use Laravel\Nova\Http\Middleware\Authenticate;
 use Laravel\Nova\Nova;
 use Novius\LaravelFormBuilder\Http\Middleware\Authorize;
-use Laravel\Nova\Http\Middleware\Authenticate;
 use Novius\LaravelFormBuilder\Resources\Form;
 use Novius\LaravelFormBuilder\Resources\FormResponse;
 
