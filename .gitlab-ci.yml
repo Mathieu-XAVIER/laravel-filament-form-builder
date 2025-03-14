@@ -1,0 +1,46 @@
+.before_script_template: &before-script-php-image
+  before_script:
+    - eval $(ssh-agent -s)
+    - echo "$SSH_PRIVATE_KEY_GITLAB_CI" | tr -d '\r' | ssh-add -
+    - ssh-add -l
+    - mkdir -p ~/.ssh
+    - chmod 700 ~/.ssh
+    - ssh-keyscan -t rsa gitlab.novius.net >> ~/.ssh/known_hosts
+    - ssh-keyscan -t rsa gitlab.lyon.novius.fr >> ~/.ssh/known_hosts
+
+stages:
+  - test
+
+codestyle-php:
+  image: docker-registry.ci.novius.net:5000/laravel-php:8.3
+  stage: test
+  <<: *before-script-php-image
+  cache:
+    - key:
+        files:
+          - composer.lock
+        prefix: 'vendor-dev-'
+      paths:
+        - vendor/
+      policy: pull-push
+  script:
+    - composer config http-basic.nova.laravel.com ${LARAVEL_NOVA_USERNAME} ${LARAVEL_NOVA_LICENSE_KEY}
+    - '[[ ! -d vendor ]] && composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts --ignore-platform-reqs'
+    - composer run-script lint
+
+phpstan:
+  image: docker-registry.ci.novius.net:5000/laravel-php:8.3
+  stage: test
+  <<: *before-script-php-image
+  cache:
+    - key:
+        files:
+          - composer.lock
+        prefix: 'vendor-dev-'
+      paths:
+        - vendor/
+      policy: pull-push
+  script:
+    - composer config http-basic.nova.laravel.com ${LARAVEL_NOVA_USERNAME} ${LARAVEL_NOVA_LICENSE_KEY}
+    - '[[ ! -d vendor ]] && composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts --ignore-platform-reqs'
+    - composer run-script phpstan

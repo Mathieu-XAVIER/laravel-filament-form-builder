@@ -7,6 +7,7 @@ use Laravel\Nova\Actions\Response;
 use Laravel\Nova\Fields\ActionFields;
 use Laravel\Nova\Http\Requests\ActionRequest;
 use Novius\LaravelForm\Models\Form;
+use Novius\LaravelForm\Models\FormResponse;
 use Rap2hpoutre\FastExcel\FastExcel;
 
 class ExportAnswers extends Action
@@ -27,9 +28,10 @@ class ExportAnswers extends Action
         });
 
         $query = $request->toSelectedResourceQuery();
+        /** @var FormResponse|null $firstModel */
         $firstModel = $query->clone()->first();
 
-        if (empty($firstModel)) {
+        if ($firstModel === null) {
             return $response->failed();
         }
 

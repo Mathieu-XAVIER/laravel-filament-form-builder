@@ -2,15 +2,19 @@
 
 namespace Novius\LaravelFormBuilder\Resources;
 
-use App\Nova\Resource;
 use Illuminate\Http\Request;
 use Laravel\Nova\Fields\DateTime;
 use Laravel\Nova\Fields\ID;
 use Laravel\Nova\Fields\Text;
+use Laravel\Nova\Resource;
+use Novius\LaravelForm\Models\FormResponse as FormResponseModel;
 use Novius\LaravelFormBuilder\Actions\ExportAnswers;
 use Novius\LaravelFormBuilder\Filters\ResponseDateFromFilter;
 use Novius\LaravelFormBuilder\Filters\ResponseDateToFilter;
 
+/**
+ * @extends Resource<FormResponseModel>
+ */
 class FormResponse extends Resource
 {
     /**
@@ -18,7 +22,7 @@ class FormResponse extends Resource
      *
      * @var string
      */
-    public static $model = \Novius\LaravelForm\Models\FormResponse::class;
+    public static $model = FormResponseModel::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -72,7 +76,7 @@ class FormResponse extends Resource
         ];
     }
 
-    protected function displayResponsesAsHtmlSummary(\Novius\LaravelForm\Models\FormResponse $formResponse): string
+    protected function displayResponsesAsHtmlSummary(FormResponseModel $formResponse): string
     {
         $responses = $formResponse->responsesWithReadableFormat('summary');
         $fieldsLimit = (int) config('laravel-form-builder.index_responses_summary_limit_fields', 5);
@@ -91,7 +95,7 @@ class FormResponse extends Resource
         return sprintf('<div class="py-2">%s</div>', implode('', $responseFields));
     }
 
-    protected function displayResponsesAsHtmlTable(\Novius\LaravelForm\Models\FormResponse $formResponse): string
+    protected function displayResponsesAsHtmlTable(FormResponseModel $formResponse): string
     {
         $responses = $formResponse->responsesWithReadableFormat();
         $responseFields = [];
@@ -120,8 +124,8 @@ class FormResponse extends Resource
     public function filters(Request $request)
     {
         return [
-            new ResponseDateFromFilter(),
-            new ResponseDateToFilter(),
+            new ResponseDateFromFilter,
+            new ResponseDateToFilter,
         ];
     }
 

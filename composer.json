@@ -1,54 +1,59 @@
 {
-  "name": "novius/laravel-nova-form-builder",
-  "description": "Form builder for Laravel Nova.",
-  "keywords": [
-    "laravel",
-    "nova",
-    "form",
-    "form-builder"
-  ],
-  "license": "AGPL-3.0-or-later",
-  "require": {
-    "php": ">=8.2",
-    "laravel/nova": "~4.0|~5.0",
-    "novius/laravel-form": "^2.0"
-  },
-  "require-dev": {
-    "laravel/pint": "^1.16"
-  },
-  "autoload": {
-    "psr-4": {
-      "Novius\\LaravelFormBuilder\\": "src/"
-    }
-  },
-  "extra": {
-    "laravel": {
-      "providers": [
-        "Novius\\LaravelFormBuilder\\LaravelFormBuilderServiceProvider"
-      ]
-    }
-  },
-  "repositories": [
-    {
-      "type": "composer",
-      "url": "https://nova.laravel.com"
-    },
-    {
-      "type": "vcs",
-      "url": "git@gitlab.novius.net:lara_libs/laravel-form.git"
-    }
-  ],
-  "scripts": {
-    "cs-fix": [
-      "./vendor/bin/pint -v"
+    "name": "novius/laravel-nova-form-builder",
+    "description": "Form builder for Laravel Nova.",
+    "keywords": [
+        "laravel",
+        "nova",
+        "form",
+        "form-builder"
     ],
-    "lint": [
-      "@composer cs-fix -- --test"
-    ]
-  },
-  "config": {
-    "sort-packages": true
-  },
-  "minimum-stability": "dev",
-  "prefer-stable": true
+    "license": "AGPL-3.0-or-later",
+    "require": {
+        "php": ">=8.2",
+        "laravel/framework": "^9.0 | ^10.0 | ^11.0 | ^12.0",
+        "laravel/nova": "^4.0 | ^5.0",
+        "novius/laravel-form": "^2.0"
+    },
+    "require-dev": {
+        "larastan/larastan": "^2.0 | ^3.0",
+        "laravel/pint": "^1.16"
+    },
+    "autoload": {
+        "psr-4": {
+            "Novius\\LaravelFormBuilder\\": "src/"
+        }
+    },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Novius\\LaravelFormBuilder\\LaravelFormBuilderServiceProvider"
+            ]
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://nova.laravel.com"
+        },
+        {
+            "type": "vcs",
+            "url": "git@gitlab.novius.net:lara_libs/laravel-form.git"
+        }
+    ],
+    "scripts": {
+        "cs-fix": [
+            "./vendor/bin/pint -v"
+        ],
+        "lint": [
+            "@composer cs-fix -- --test"
+        ],
+        "phpstan": [
+            "./vendor/bin/phpstan analyse --memory-limit=1G"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true
 }

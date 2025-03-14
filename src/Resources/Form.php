@@ -2,7 +2,6 @@
 
 namespace Novius\LaravelFormBuilder\Resources;
 
-use App\Nova\Resource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Laravel\Nova\Fields\Boolean;
@@ -15,7 +14,12 @@ use Laravel\Nova\Fields\Slug;
 use Laravel\Nova\Fields\Text;
 use Laravel\Nova\Fields\Textarea;
 use Laravel\Nova\Http\Requests\NovaRequest;
+use Laravel\Nova\Resource;
+use Novius\LaravelForm\Models\Form as FormModel;
 
+/**
+ * @extends Resource<FormModel>
+ */
 class Form extends Resource
 {
     /**
@@ -23,7 +27,7 @@ class Form extends Resource
      *
      * @var string
      */
-    public static $model = \Novius\LaravelForm\Models\Form::class;
+    public static $model = FormModel::class;
 
     /**
      * The single value that should be used to represent the resource when being displayed.
@@ -76,27 +80,27 @@ class Form extends Resource
                 ->exceptOnForms(),
 
             Select::make(trans('laravel-form-builder::form.after_sent_action'), 'after_sent_action')
-                ->options(\Novius\LaravelForm\Models\Form::afterSentActions())
+                ->options(FormModel::afterSentActions())
                 ->displayUsingLabels()
-                ->rules('required', 'in:'.implode(',', \Novius\LaravelForm\Models\Form::afterSentActionsIds()))
+                ->rules('required', 'in:'.implode(',', FormModel::afterSentActionsIds()))
                 ->hideFromIndex(),
 
             Markdown::make(trans('laravel-form-builder::form.success_message_sent'), 'after_sent_message')
                 ->hide()
-                ->rules('required_if:after_sent_action,'.\Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE)
+                ->rules('required_if:after_sent_action,'.FormModel::AFTER_SENT_ACTION_MESSAGE)
                 ->hideFromIndex()
                 ->dependsOn('after_sent_action', function (Markdown $field, NovaRequest $request, FormData $formData) {
-                    if ($formData->after_sent_action === \Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE) {
+                    if ($formData->get('after_sent_action') === FormModel::AFTER_SENT_ACTION_MESSAGE) {
                         $field->show()->required();
                     }
                 }),
 
             Text::make(trans('laravel-form-builder::form.redirection_url_field'), 'after_sent_redirection_url')
                 ->hide()
-                ->rules('required_if:after_sent_action,'.\Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_REDIRECTION, 'url')
+                ->rules('required_if:after_sent_action,'.FormModel::AFTER_SENT_ACTION_REDIRECTION, 'url')
                 ->hideFromIndex()
                 ->dependsOn('after_sent_action', function (Text $field, NovaRequest $request, FormData $formData) {
-                    if ($formData->after_sent_action === \Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_REDIRECTION) {
+                    if ($formData->get('after_sent_action') === FormModel::AFTER_SENT_ACTION_REDIRECTION) {
                         $field->show()->required();
                     }
                 }),
@@ -107,7 +111,7 @@ class Form extends Resource
                 ->help(trans('laravel-form-builder::form.mail_notification_recipients_help'))
                 ->rows(3)
                 ->hide()
-                ->rules('required_if:after_sent_notification,'.\Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE, function ($attribute, $value, $fail) {
+                ->rules('required_if:after_sent_notification,'.FormModel::AFTER_SENT_ACTION_MESSAGE, function ($attribute, $value, $fail) {
                     if (! empty($value)) {
                         $emails = explode(',', $value);
                         foreach ($emails as $email) {
@@ -131,7 +135,7 @@ class Form extends Resource
                 ),
 
             Text::make(trans('laravel-form-builder::form.notification_subject'), 'after_sent_notification_subject')
-                ->rules('required_if:after_sent_notification,'.\Novius\LaravelForm\Models\Form::AFTER_SENT_ACTION_MESSAGE)
+                ->rules('required_if:after_sent_notification,'.FormModel::AFTER_SENT_ACTION_MESSAGE)
                 ->hideFromIndex()
                 ->hide()
                 ->dependsOn(

@@ -18,7 +18,7 @@ class FormController extends Controller
                     return [];
                 }
 
-                $field = new $class();
+                $field = new $class;
                 if (! $field instanceof AbstractField) {
                     return [];
                 }

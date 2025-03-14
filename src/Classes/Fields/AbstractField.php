@@ -17,6 +17,6 @@ abstract class AbstractField implements FormField
     {
         $model = static::$model;
 
-        return new $model();
+        return new $model;
     }
 }
