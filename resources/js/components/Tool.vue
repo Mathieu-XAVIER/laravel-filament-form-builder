@@ -18,8 +18,7 @@
       </Link>
     </div>
 
-
-    <home :fields="fields"/>
+    <Home :fields="fields"/>
 
     <div
       class="lnfb-flex lnfb-flex-col md:lnfb-flex-row md:lnfb-items-center lnfb-justify-center md:lnfb-justify-end lnfb-space-y-2 md:lnfb-space-y-0 lnfb-space-x-3"

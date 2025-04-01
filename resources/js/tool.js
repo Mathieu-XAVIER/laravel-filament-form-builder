@@ -22,6 +22,8 @@ import Upload from '@/components/FormElements/FormElementUpload'
 import HtmlComponent from '@/components/FormElements/FormElementHtml'
 import Tool from '@/components/Tool'
 
+Nova.inertia('LaravelFormBuilder', Tool)
+
 Nova.booting((app, store) => {
   app.component('LnfbTextInput', TextInput)
   app.component('LnfbLongTextInput', LongTextInput)
@@ -48,6 +50,4 @@ Nova.booting((app, store) => {
   store.registerModule(
     'laravel_form_builder_datastore', datastore
   );
-
-  Nova.inertia('LaravelFormBuilder', Tool)
 });

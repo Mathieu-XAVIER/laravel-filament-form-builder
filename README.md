@@ -10,12 +10,12 @@ This package uses [laravel-form](http://gitlab.novius.net/lara_libs/laravel-form
 
 ## Requirements
 
-* PHP >= 8.2
+* PHP >= 8.3
 * Laravel Framework >= 10.0
-* Laravel Nova >= 4.0
+* Laravel Nova >= 5.0
 
-> **NOTE**: These instructions are for Laravel >= 10.x and PHP >= 8.2. If you are using prior version, please
-> see the [previous version's docs](/lara_libs/laravel-nova-form-builder/-/tree/1.x).
+> **NOTE**: These instructions are for Laravel >= 10.x and PHP >= 8.3. If you are using prior version, please
+> see the [previous version's docs](/lara_libs/laravel-nova-form-builder/-/tree/2.x).
 > 
 ## Installation
 
