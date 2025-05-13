@@ -8,6 +8,6 @@
 
 <script>
 export default {
-  props: ['currentField']
-}
+  props: ['currentField'],
+};
 </script>

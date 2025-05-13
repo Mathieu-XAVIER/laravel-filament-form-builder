@@ -1,17 +1,11 @@
 <template>
-  <Modal
-    :show="show"
-    role="alertdialog"
-    size="sm"
-  >
+  <Modal :show="show" role="alertdialog" size="sm">
     <form
       @submit.prevent="handleConfirm"
       class="lnfb-mx-auto lnfb-bg-white dark:lnfb-bg-gray-800 lnfb-rounded-lg lnfb-shadow-lg lnfb-overflow-hidden"
     >
       <slot>
-        <ModalHeader>
-          Suppression
-        </ModalHeader>
+        <ModalHeader> Suppression </ModalHeader>
         <ModalContent>
           <p class="lnfb-leading-normal" v-if="field.label">
             Êtes-vous sûr de vouloir supprimer le champ "<span v-text="field.label"></span>" ?
@@ -25,20 +19,11 @@
 
       <ModalFooter>
         <div class="ml-auto">
-          <LinkButton
-            type="button"
-            @click.prevent="handleClose"
-            class="mr-3"
-          >
+          <LinkButton type="button" @click.prevent="handleClose" className="mr-3">
             {{ __('Cancel') }}
           </LinkButton>
 
-          <LnfbDangerButton
-            type="submit"
-          >
-            Supprimer
-          </LnfbDangerButton>
-
+          <LnfbDangerButton type="submit"> Supprimer </LnfbDangerButton>
         </div>
       </ModalFooter>
     </form>
@@ -46,7 +31,7 @@
 </template>
 
 <script>
-import startCase from 'lodash/startCase'
+import startCase from 'lodash/startCase';
 
 export default {
   emits: ['confirm', 'close'],
@@ -63,13 +48,13 @@ export default {
 
   methods: {
     handleClose() {
-      this.$emit('close')
-      this.working = false
+      this.$emit('close');
+      this.working = false;
     },
 
     handleConfirm() {
-      this.$emit('confirm')
-      this.working = true
+      this.$emit('confirm');
+      this.working = true;
     },
   },
 
@@ -79,7 +64,7 @@ export default {
   mounted() {
     this.$nextTick(() => {
       // this.$refs.confirmButton.button.focus()
-    })
+    });
   },
-}
+};
 </script>
