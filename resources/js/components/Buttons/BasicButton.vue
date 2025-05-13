@@ -3,9 +3,9 @@
     v-bind="{ ...$props, ...$attrs }"
     :component="component"
     ref="button"
-    class="lnfb-cursor-pointer lnfb-px-3 lnfb-py-1 lnfb-shadow lnfb-relative lnfb-border lnfb-border-gray-300 lnfb-bg-white lnfb-text-gray-700 hover:lnfb-bg-gray-50 focus:lnfb-outline-none"
+    class="lnfb-rounded-md lnfb-bg-indigo-600 lnfb-px-3.5 lnfb-py-2.5 lnfb-text-sm lnfb-font-semibold lnfb-text-white lnfb-shadow-xs hover:lnfb-bg-indigo-500 focus-visible:lnfb-outline-2 focus-visible:lnfb-outline-offset-2 focus-visible:lnfb-outline-indigo-600"
   >
-    <slot/>
+    <slot />
   </Button>
 </template>
 
@@ -20,7 +20,7 @@ export default {
     align: {
       type: String,
       default: 'center',
-      validator: v => ['left', 'center'].includes(v),
+      validator: (v) => ['left', 'center'].includes(v),
     },
 
     component: {
@@ -28,5 +28,5 @@ export default {
       default: 'button',
     },
   },
-}
+};
 </script>

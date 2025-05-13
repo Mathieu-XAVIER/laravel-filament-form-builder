@@ -1,16 +1,18 @@
 <template>
   <div class="lnfb-w-full">
-    <label class="lnfb-block lnfb-uppercase lnfb-tracking-wide lnfb-text-gray-700 lnfb-text-xs lnfb-font-bold lnfb-mb-2"
-           v-text="currentField.label"></label>
+    <label
+      class="lnfb-block lnfb-uppercase lnfb-tracking-wide lnfb-text-gray-700 dark:lnfb-text-gray-400 lnfb-text-xs lnfb-font-bold lnfb-mb-2"
+      v-text="currentField.label"
+    ></label>
+
     <textarea
-      class="lnfb-w-full form-control form-input form-input-bordered lnfb-py-3 lnfb-h-auto"
+      class="form-input lnfb-w-full form-control form-control-bordered bg-gray-50 lnfb-h-auto"
       v-model="textarea"
       :placeholder="currentField.isPlaceholderVisible ? currentField.placeholder : ''"
       v-bind="attributesBinding"
-    />
-    <div v-if="currentField.help"
-         v-text="currentField.help"
-         class="lnfb-py-2 lnfb-text-sm"></div>
+    ></textarea>
+
+    <div v-if="currentField.help" v-text="currentField.help" class="lnfb-py-2 lnfb-text-sm"></div>
   </div>
 </template>
 
@@ -20,8 +22,8 @@ export default {
   props: ['currentField'],
   data() {
     return {
-      textarea: ''
-    }
+      textarea: '',
+    };
   },
   computed: {
     attributesBinding() {
@@ -31,13 +33,13 @@ export default {
         attr.disabled = 'disabled';
       }
 
-      attr.rows = 2;
+      attr.rows = 5;
       if (this.currentField.rows) {
         attr.rows = parseInt(this.currentField.rows, 10);
       }
 
       return attr;
     },
-  }
-}
+  },
+};
 </script>

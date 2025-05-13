@@ -1,16 +1,17 @@
 <template>
   <div class="lnfb-w-full">
-    <label class="lnfb-block lnfb-uppercase lnfb-tracking-wide lnfb-text-gray-700 lnfb-text-xs lnfb-font-bold lnfb-mb-2"
-           v-text="currentField.label">
-    </label>
+    <label
+      class="lnfb-block lnfb-uppercase lnfb-tracking-wide lnfb-text-gray-700 dark:lnfb-text-gray-400 lnfb-text-xs lnfb-font-bold lnfb-mb-2"
+      v-text="currentField.label"
+    ></label>
 
-    <input type="number"
-           class="lnfb-form-input"
-           v-bind="attributesBinding"/>
+    <input
+      type="number"
+      class="form-input form-control form-control-bordered bg-gray-50"
+      v-bind="attributesBinding"
+    />
 
-    <div v-if="currentField.help"
-         v-text="currentField.help"
-         class="lnfb-py-2 lnfb-text-sm"></div>
+    <div v-if="currentField.help" v-text="currentField.help" class="lnfb-py-2 lnfb-text-sm"></div>
   </div>
 </template>
 
@@ -31,7 +32,7 @@ export default {
       }
 
       return attr;
-    }
-  }
-}
+    },
+  },
+};
 </script>

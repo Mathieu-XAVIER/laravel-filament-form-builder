@@ -6,19 +6,19 @@ export default {
     activeTabForFields: 'elements',
   },
   getters: {
-    forms: state => state.forms,
-    activeField: state => state.activeField,
-    activeTabForFields: state => state.activeTabForFields,
+    forms: (state) => state.forms,
+    activeField: (state) => state.activeField,
+    activeTabForFields: (state) => state.activeTabForFields,
   },
   mutations: {
     activeField(state, value) {
-      state.activeField = value
+      state.activeField = value;
     },
     activeTabForFields(state, value) {
-      state.activeTabForFields = value
+      state.activeTabForFields = value;
     },
     forms(state, value) {
-      state.forms = value
+      state.forms = value;
     },
   },
-}
+};

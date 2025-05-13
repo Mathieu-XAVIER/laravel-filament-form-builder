@@ -74,7 +74,7 @@ class Form extends Resource
                 ->updateRules('unique:forms,slug,{{resourceId}}'),
 
             Text::make(trans('laravel-form-builder::form.update_fields'), function () {
-                return sprintf('<a class="no-underline dim text-primary font-bold" href="%s">%s</a>', '/admin/laravel-form-builder/'.$this->id, trans('laravel-form-builder::form.update_fields'));
+                return sprintf('<a class="link-default" href="%s">%s</a>', '/admin/laravel-form-builder/'.$this->id, trans('laravel-form-builder::form.update_fields'));
             })
                 ->asHtml()
                 ->exceptOnForms(),
