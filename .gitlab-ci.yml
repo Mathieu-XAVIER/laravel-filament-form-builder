@@ -12,7 +12,7 @@ stages:
   - test
 
 codestyle-php:
-  image: docker-registry.ci.novius.net:5000/laravel-php:8.3
+  image: docker-registry.ci.novius.net:5000/laravel-php:8.2
   stage: test
   <<: *before-script-php-image
   cache:
@@ -29,7 +29,7 @@ codestyle-php:
     - composer run-script lint
 
 phpstan:
-  image: docker-registry.ci.novius.net:5000/laravel-php:8.3
+  image: docker-registry.ci.novius.net:5000/laravel-php:8.2
   stage: test
   <<: *before-script-php-image
   cache:
