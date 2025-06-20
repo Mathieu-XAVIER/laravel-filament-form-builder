@@ -18,4 +18,7 @@ return [
     'redirection_url_field' => 'URL de redirection',
     'fields_saved' => '{0} Sauvegarde réussie. Attention il semble n\'y avoir aucun champ dans votre formulaire.|[1,*] Sauvegarde des champs réussie.',
     'saving_fields_error' => 'Erreur durant la sauvegarde des champs.',
+
+    'resource_label_singular' => 'Formulaire',
+    'resource_label' => 'Formulaires',
 ];

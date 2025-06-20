@@ -12,7 +12,7 @@ class FormController extends Controller
     public function formFields(Request $request, int $id)
     {
         $form = Form::findOrFail($id);
-        $defaultfields = collect(config('laravel-form-builder.fields_type_matching', []))
+        $defaultfields = collect(config('laravel-filament-form-builder.fields_type_matching', []))
             ->map(function ($class, $component) {
                 if (! class_exists($class)) {
                     return [];

@@ -23,4 +23,9 @@ return [
         'Upload' => \Novius\LaravelFormBuilder\Classes\Fields\UploadInput::class,
         'HoneyPot' => \Novius\LaravelFormBuilder\Classes\Fields\HoneyPot::class,
     ],
+
+    'resources' => [
+        \Novius\LaravelFormBuilder\Filament\Resources\FormResource::class,
+        \Novius\LaravelFormBuilder\Filament\Resources\FormResponseResource::class,
+    ],
 ];

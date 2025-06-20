@@ -1,18 +1,17 @@
 {
-    "name": "novius/laravel-nova-form-builder",
-    "description": "Form builder for Laravel Nova.",
+    "name": "novius/laravel-filament-form-builder",
+    "description": "Form builder for Laravel Filament.",
     "keywords": [
         "laravel",
-        "nova",
+        "filament",
         "form",
         "form-builder"
     ],
     "license": "AGPL-3.0-or-later",
     "require": {
         "php": ">=8.2",
-        "laravel/framework": "^10.0 | ^11.0 | ^12.0",
-        "laravel/nova": "^5.0",
-        "laravel/nova-devtool": "^1.7",
+        "filament/filament": "^3.3",
+        "laravel/framework": "^11.0 | ^12.0",
         "novius/laravel-form": "^2.0"
     },
     "require-dev": {
@@ -33,10 +32,6 @@
         }
     },
     "repositories": [
-        {
-            "type": "composer",
-            "url": "https://nova.laravel.com"
-        },
         {
             "type": "vcs",
             "url": "git@gitlab.novius.net:lara_libs/laravel-form.git"

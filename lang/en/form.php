@@ -2,6 +2,7 @@
 
 return [
     'forms' => 'Forms',
+    'form' => 'Form',
     'form_name' => 'Name',
     'slug' => 'Slug',
     'update_fields' => 'Update fields',
@@ -18,4 +19,5 @@ return [
     'redirection_url_field' => 'Redirect URL',
     'fields_saved' => '{0} Fields seved successfully. Please note that there appears to be no field in your form.|[1,*] Fields seved successfully.',
     'saving_fields_error' => 'Error during fields saving.',
+    'manage_fields' => 'Manage fields',
 ];
